@@ -16,8 +16,9 @@ public:
   MyString& insert(int index, const MyString& str);
   MyString& erase(int from, int to);
   MyString operator+(const MyString& str) const;
+  ~MyString();
+  const MyString& lightCopy(MyString& str);
   const MyString& operator=(const MyString& str);
-  char** getString();
   void print() const;
   void println() const;
   void printinfo() const;
@@ -49,6 +50,14 @@ MyString& MyString::assign(const MyString& str)
   return *this;
 }
 MyString::MyString(){};
+const MyString& MyString::lightCopy(MyString& str)
+{
+  string = str.string;
+  length = str.length;
+  capacity = str.capacity;
+  str.string = NULL;
+  return *this;
+}
 MyString::MyString(const char* str)
 {
   length = capacity = strlen(str);
@@ -63,10 +72,6 @@ MyString::MyString(const MyString& str)
   string = new char[capacity];
   for(int i = 0; i < length; i++)
     string[i] = str.string[i];
-}
-char** getString()
-{
-  return &string;
 }
 char& MyString::operator[](int index)
 {
@@ -105,7 +110,10 @@ MyString MyString::operator+(const MyString& str) const
   temp.insert(length, str);
   return temp;
 }
-
+MyString::~MyString()
+{
+  if(string) delete[] string;
+}
 const MyString& MyString::operator=(const MyString& str)
 {
   return (*this).assign(str);

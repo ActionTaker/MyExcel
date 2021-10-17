@@ -81,3 +81,69 @@ data[i - 1] = data[i];
 data[i - 1].lightCopy(data[i]);
 ```
 를 사용해준다.
+
+# Stack
+>
+```
+class Stack {
+  struct Node {
+    Node* prev;
+    MyString s;
+  };
+  Node* current;
+  Node* start;
+ public:
+  Stack();
+  void push(MyString s);
+  string pop();
+  string peek();
+  bool is_empty();
+  ~Stack();
+};
+```
+
+## void Stack::push(MyString s)
+>
+```
+void Stack::push(MyString s)
+{
+  if(start == NULL)
+  {
+    start = new Stack::Node;
+    current = start;
+    start->prev = NULL;
+    start->s.lightCopy(s);
+    return;
+  }
+  Node* temp = new Stack::Node;
+  temp->prev = current;
+  temp->s.lightCopy(s);
+  current = temp;
+}
+```
+여기서 매개변수로 s를 받았으므로 자유롭게 이용가능하다 레퍼런스로 받았다면 char배열 바꿔치기가 불가능하다. 그래서 Node안의 MyString을 light copy를 통해 복사해준다.
+
+## MyString Stack::pop()
+>
+```
+MyString Stack::pop()
+{
+  MyString s;
+  s.lightCopy(current->s);
+  Node* prev = current->prev;
+  delete current;
+  current = prev;
+  return s;
+}
+```
+현재 curr를 가리키고있는 노드의 MyString은 없어질것이다 따라서 lightCopy가 가능함 pop()내부에서 새로운 s를 만들고 lightcopy를 진행후 임시객체를 만들때 복사1회가 이루어진다.
+
+## const MyString& Stack::peek()
+>
+```
+const MyString& Stack::peek()
+{
+  return current->s;
+}
+```
+pop과는 달리 없어지는 객체가 없으므로 복사를 피하기 위해 const MyString&으로 리턴해준다.

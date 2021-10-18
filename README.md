@@ -9,9 +9,10 @@ class Vector {
  public:
   Vector(int n = 1);
   void push_back(MyString s);
-  string operator[](int i);
+  MyString& operator[](int i); //읽고 쓰게 하기위해 &반환
   void remove(int x);
   int size();
+  void print();
   ~Vector();
 };
 ```

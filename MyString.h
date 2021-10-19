@@ -10,6 +10,7 @@ public:
   MyString(const char* str);
   MyString(const MyString& str);
   char& operator[](int index);
+  char operator[](int index) const;
   void reserve(int size);
   MyString& assign(const MyString& str);
   MyString& insert(int index, const MyString& str);

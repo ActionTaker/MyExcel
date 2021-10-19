@@ -53,7 +53,10 @@ char& MyString::operator[](int index)
 {
   return string[index];
 }
-
+char MyString::operator[](int index) const
+{
+  return string[index];
+}
 MyString& MyString::insert(int index, const MyString& str)
 {
   if(capacity < str.length + length)

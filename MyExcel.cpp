@@ -4,16 +4,72 @@ class Cell {
  protected:
   int x, y;
   Table* table;
-  MyString data;
  public:
-  virtual const MyString& stringify();
-  virtual int to_numeric();
-  Cell(MyString data, int x, int y, Table* table);
+  virtual MyString stringify() = 0;
+  virtual int to_numeric() = 0;
+  Cell(int x, int y, Table* table);
 };
 
-Cell::Cell(MyString data, int x, int y, Table* table):data(data), x(x), y(y), table(table) {}
-const MyString& Cell:: stringify() {return data;}
-int Cell::to_numeric() {return 0;}
+Cell::Cell(int x, int y, Table* table): x(x), y(y), table(table) {}
+
+class StringCell : public Cell {
+  MyString data;
+
+ public:
+  MyString stringify();
+  int to_numeric();
+
+  StringCell(string data, int x, int y, Table* t);
+};
+MyString StringCell::stringify()
+{
+  return data;
+}
+int StringCell::to_numeric() //다른 상속클래스를위해 만들어진 의미없는 함수
+{
+  return 0;
+}
+
+MyString StringCell::stringify()
+{
+  return data;
+}
+class NumberCell : public Cell {
+  int data;
+
+ public:
+  MyString stringify();
+  int to_numeric();
+
+  NumberCell(int data, int x, int y, Table* t);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Table {
  protected:
